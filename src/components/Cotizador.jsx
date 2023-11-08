@@ -6,6 +6,7 @@ import HandleStorage from "./HandleStorage";
 import Ubicaciones from "./Ubicaciones";
 import Propiedades from "./Propiedades";
 import Metros from "./Metros";
+import gif from "../images/Ellipsis-1.1s-44px.gif"
 
 export default function Cotizador() {
   const [data, setData] = useState({});
@@ -84,7 +85,7 @@ export default function Cotizador() {
           <button onClick={() => handleSubmit} disabled={loading}>
             {loading ? (
               <img
-                src="/src/images/Ellipsis-1.1s-44px.gif"
+                src={gif}
                 width="80%"
                 alt="Cargando..."
               />
