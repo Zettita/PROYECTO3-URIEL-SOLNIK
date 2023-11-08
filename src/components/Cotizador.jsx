@@ -4,14 +4,15 @@ import { Link } from "react-router-dom";
 import CotizacionResult from "./CotizacionResult";
 import HandleStorage from "./HandleStorage";
 import Ubicaciones from "./Ubicaciones";
-import Propiedades from "./propiedades";
+import Propiedades from "./Propiedades";
 import Metros from "./Metros";
 
 export default function Cotizador() {
   const [data, setData] = useState({});
   const [cotizacion, setCotizacion] = useState(0);
-  const [dataCotizacion, setDataCotizacion] = useState([]);
+  const [dataCotizacion, setDataCotizacion] = useState({});
   const mt2 = 35.86;
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const formatData = async () => {
@@ -34,54 +35,42 @@ export default function Cotizador() {
     formatData();
   }, []);
 
- 
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const localidadValue = Number(e.target.ubicacion.value);
     const propiedadValue = Number(e.target.tipo.value);
     const metrosValue = Number(e.target.metros.value);
+    const precio = localidadValue * propiedadValue * metrosValue * mt2;
 
     const localidadObj = data.ubicaciones.find(
       (ubicacion) => ubicacion.factor === localidadValue
     );
-    console.log(localidadObj);
+
     const propiedadObj = data.propiedades.find(
       (propiedad) => propiedad.factor === propiedadValue
     );
-    console.log(propiedadObj);
 
+    const nuevaCotizacion = {
+      fechaCotizacion: new Date().toLocaleString(),
+      propiedad: propiedadObj.tipo,
+      localidad: localidadObj.tipo,
+      metros: metrosValue,
+      precio: precio.toFixed(2),
+    };
 
-      setCotizacion(() => {
-      const precio =  localidadValue *
-      propiedadValue *
-      metrosValue *
-      mt2
-      return precio.toFixed(2);
-    }
-      
-    );
-    console.log(cotizacion);
+    setTimeout(() => {
+      setLoading(false);
+      setCotizacion(precio.toFixed(2));
+    }, 2500);
 
-    setDataCotizacion(() => {
-      const nuevaCotizacion = {
-        fechaCotizacion: new Date().toLocaleString(),
-        propiedad: propiedadObj.tipo,
-        localidad: localidadObj.tipo,
-        metros: metrosValue,
-        precio: cotizacion
-      };
-      return [...dataCotizacion, nuevaCotizacion];
-    });
+    setTimeout(() => {
+      setDataCotizacion(nuevaCotizacion);
+    }, 2500);
   };
 
-  useEffect(() => {
-    setCotizacion(cotizacion) // Esto se ejecutará cada vez que cotizacion cambie
-  }, [cotizacion]);
-
-  console.log(cotizacion);
-
+  console.log(dataCotizacion);
 
   return (
     <>
@@ -92,7 +81,17 @@ export default function Cotizador() {
           <Ubicaciones opciones={data} />
           <Metros />
 
-          <button type="submit">Cotizar</button>
+          <button type="submit" disabled={loading}>
+            {loading ? (
+              <img
+                src="./src/components/Ellipsis-1.1s-44px.gif"
+                width="35px"
+                alt="Cargando..."
+              />
+            ) : (
+              "Cotizar"
+            )}
+          </button>
 
           {cotizacion !== 0 ? (
             <CotizacionResult resultado={cotizacion}></CotizacionResult>
@@ -100,10 +99,7 @@ export default function Cotizador() {
             <div className="importe">Ingrese datos para cotizar</div>
           )}
 
-          <HandleStorage
-            cotizacion={cotizacion}
-            dataCotizacion={dataCotizacion}
-          ></HandleStorage>
+          <HandleStorage dataCotizacion={dataCotizacion}></HandleStorage>
         </form>
       </div>
     </>

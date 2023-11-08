@@ -1,14 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const HandleStorage = ({dataCotizacion}) => {
-const [data, setData] = useState([JSON.parse(localStorage.getItem("cotizacion"))])
-  const handleLocalStorage = () => {
-    localStorage.setItem(`cotizacion`, JSON.stringify({dataCotizacion}));
-    // const storageData = localStorage.getItem('cotizaciones');
+const HandleStorage = ({ dataCotizacion }) => {
+  const [cotizacion, setCotizacion] = useState([dataCotizacion]);
+  const [historial, setHistorial] = useState([]);
+
+  useEffect(() => {
+    const savedHistory = JSON.parse(localStorage.getItem('historialCotizaciones'))
+    setHistorial(savedHistory)
+  }, [])
+  
+
+  useEffect(() => {
+    setCotizacion(dataCotizacion);
+  }, [dataCotizacion]);
+
+  const saveCotizacion = () => {
+    
+    setHistorial([...historial, ...cotizacion]);
+    
+    localStorage.setItem("historialCotizaciones", JSON.stringify( historial )
+    );
   };
-  return (  
+  console.log(historial);
+  return (
     <div style={{ marginTop: "20px" }}>
-      <button onClick={handleLocalStorage}>Guardar Cotizacion</button>
+      <button onClick={saveCotizacion}>Guardar Cotizacion</button>
     </div>
   );
 };
