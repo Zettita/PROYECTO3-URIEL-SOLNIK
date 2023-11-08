@@ -84,7 +84,7 @@ export default function Cotizador() {
           <button onClick={() => handleSubmit} disabled={loading}>
             {loading ? (
               <img
-                src="../images/Ellipsis-1.1s-44px.gif"
+                src="./src/images/Ellipsis-1.1s-44px.gif"
                 width="35px"
                 alt="Cargando..."
               />
