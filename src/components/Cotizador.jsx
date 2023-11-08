@@ -81,10 +81,10 @@ export default function Cotizador() {
           <Ubicaciones opciones={data} />
           <Metros />
 
-          <button type="submit" disabled={loading}>
+          <button onClick={() => handleSubmit} disabled={loading}>
             {loading ? (
               <img
-                src="./src/components/Ellipsis-1.1s-44px.gif"
+                src="../images/Ellipsis-1.1s-44px.gif"
                 width="35px"
                 alt="Cargando..."
               />
@@ -98,9 +98,8 @@ export default function Cotizador() {
           ) : (
             <div className="importe">Ingrese datos para cotizar</div>
           )}
-
-          <HandleStorage dataCotizacion={dataCotizacion}></HandleStorage>
         </form>
+        <HandleStorage dataCotizacion={dataCotizacion}></HandleStorage>
       </div>
     </>
   );

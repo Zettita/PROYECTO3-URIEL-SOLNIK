@@ -5,7 +5,7 @@ const HandleStorage = ({ dataCotizacion }) => {
   const [historial, setHistorial] = useState([]);
 
   useEffect(() => {
-    const savedHistory = JSON.parse(localStorage.getItem('historialCotizaciones'))
+    const savedHistory = JSON.parse(localStorage.getItem('historialCotizaciones')) || [];
     setHistorial(savedHistory)
   }, [])
   
@@ -16,7 +16,7 @@ const HandleStorage = ({ dataCotizacion }) => {
 
   const saveCotizacion = () => {
     
-    setHistorial([...historial, ...cotizacion]);
+    setHistorial([...historial, cotizacion]);
     
     localStorage.setItem("historialCotizaciones", JSON.stringify( historial )
     );
