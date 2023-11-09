@@ -4,13 +4,19 @@ import { Link } from "react-router-dom";
 
 
 export default function Cotizaciones() {
-const [data, setData] = useState([JSON.parse(localStorage.getItem("historialCotizaciones"))])
+const [data, setData] = useState([])
 const [cotizaciones, setCotizaciones] = useState([])
-console.log(data);
 
 useEffect(() => {
-  const historialCotizaciones = JSON.parse(localStorage.getItem("historialCotizaciones"));
-  setCotizaciones(dataCotizacion => {[...dataCotizacion, historialCotizaciones]});
+  const historial = JSON.parse(localStorage.getItem("historialCotizaciones")) || [];
+  setData(historial)
+}, [])
+
+
+useEffect(() => {
+  const historialCotizaciones = data
+  console.log(historialCotizaciones);
+  setCotizaciones(...cotizaciones, historialCotizaciones);
 }, [data])
   console.log(cotizaciones);
   return (
@@ -28,7 +34,7 @@ useEffect(() => {
             </thead>
             <tbody>
               
-                {cotizaciones?.map((cotizacion, index) => {
+                {cotizaciones.map((cotizacion, index) => {
                   console.log(cotizacion);
                   return(
                     <tr key={index}>
@@ -36,16 +42,16 @@ useEffect(() => {
                     <td>{cotizacion?.propiedad}</td>
                     <td>{cotizacion?.localidad}</td>
                     <td>{cotizacion?.metros}</td>
-                    <td>{cotizacion?.precio}</td>
+                    <td>${cotizacion?.precio}</td>
                     </tr>
                   )
                 })}
                 
             </tbody>
         </table>
-    <button>
-      <Link to="/" >Atras</Link>
-    </button>
+    
+      <Link to="/" ><button>Atras</button></Link>
+    
   </div>
   </>
   )

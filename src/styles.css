@@ -89,3 +89,7 @@ button:active {
 .text-rojo {
   color: red !important;
 }
+
+a {
+  color: #ffffff
+}

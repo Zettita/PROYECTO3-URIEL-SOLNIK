@@ -7,6 +7,8 @@ import Ubicaciones from "./Ubicaciones";
 import Propiedades from "./Propiedades";
 import Metros from "./Metros";
 import gif from "../images/Ellipsis-1.1s-44px.gif"
+import Alerta from "./Alerta";
+
 
 export default function Cotizador() {
   const [data, setData] = useState({});
@@ -14,6 +16,8 @@ export default function Cotizador() {
   const [dataCotizacion, setDataCotizacion] = useState({});
   const mt2 = 35.86;
   const [loading, setLoading] = useState(false);
+
+
 
   useEffect(() => {
     const formatData = async () => {
@@ -64,6 +68,7 @@ export default function Cotizador() {
     setTimeout(() => {
       setLoading(false);
       setCotizacion(precio.toFixed(2));
+      
     }, 2500);
 
     setTimeout(() => {

@@ -1,27 +1,31 @@
 import { useEffect, useState } from "react";
+import Alerta from "./Alerta";
 
 const HandleStorage = ({ dataCotizacion }) => {
-  const [cotizacion, setCotizacion] = useState([dataCotizacion]);
+  const [cotizacion, setCotizacion] = useState(dataCotizacion);
   const [historial, setHistorial] = useState([]);
 
   useEffect(() => {
-    const savedHistory = JSON.parse(localStorage.getItem('historialCotizaciones')) || [];
-    setHistorial(savedHistory)
-  }, [])
-  
+    const savedHistory =
+      JSON.parse(localStorage.getItem("historialCotizaciones")) || [];
+    setHistorial(savedHistory);
+  }, []);
 
   useEffect(() => {
     setCotizacion(dataCotizacion);
   }, [dataCotizacion]);
 
   const saveCotizacion = () => {
-    
-    setHistorial([...historial, cotizacion]);
-    
-    localStorage.setItem("historialCotizaciones", JSON.stringify( historial )
-    );
+    const updatedHistory = [...historial, cotizacion];
+    setTimeout(() => {
+      localStorage.setItem(
+        "historialCotizaciones",
+        JSON.stringify(updatedHistory)
+      );
+      setHistorial(updatedHistory);
+      Alerta("", "Cotización guardada con éxito.", "success");
+    }, 2500);
   };
-  console.log(historial);
   return (
     <div style={{ marginTop: "20px" }}>
       <button onClick={saveCotizacion}>Guardar Cotizacion</button>
