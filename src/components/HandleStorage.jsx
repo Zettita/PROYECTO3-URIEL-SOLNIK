@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Alerta from "./Alerta";
+import Alerta from "./Alerts/Alerta";
 
 const HandleStorage = ({ dataCotizacion }) => {
   const [cotizacion, setCotizacion] = useState(dataCotizacion);

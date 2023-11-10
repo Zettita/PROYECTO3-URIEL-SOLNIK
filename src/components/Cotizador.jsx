@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import getData from "./getData";
+import getData from "./GetData/getData";
 import { Link } from "react-router-dom";
 import CotizacionResult from "./CotizacionResult";
 import HandleStorage from "./HandleStorage";
-import Ubicaciones from "./Ubicaciones";
-import Propiedades from "./Propiedades";
-import Metros from "./Metros";
+import Ubicaciones from "./Inputs/Ubicaciones";
+import Propiedades from "./Inputs/Propiedades";
+import Metros from "./Inputs/Metros";
 import gif from "../images/Ellipsis-1.1s-44px.gif"
-import Alerta from "./Alerta";
+
 
 
 export default function Cotizador() {
